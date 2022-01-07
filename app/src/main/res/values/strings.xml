@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_favorite">Favorite</string>
+    <string name="nav_history">History</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_my_profile">My Profile</string>
+    <string name="nav_change_password">Change Password</string>
+    <string name="nav_sign_out">Sign Out</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="tim_kiem">Nhập tên tác phẩm</string>
+    <string name="acton_search">Search</string>
+
+    <string name="tac_gia">Tác giả</string>
+    <string name="tac_gia_name">Đang cập nhật</string>
+
+    <string name="tinh_trang">Tình trạng</string>
+    <string name="tinh_trang_name">Đang tiến hành</string>
+
+    <string name="the_loai">Thể loại</string>
+    <string name="the_loai_name">Đô thị, Huyền huyễn</string>
+
+    <string name="theo_doi">Theo dõi</string>
+
+    <string name="doc_truyen">Đọc truyện</string>
+    <string name="noi_dung">Nội dung</string>
+    <string name="noi_dung_content">Truyện chưa có tóm tắt</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="save_pass">Lưu mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="registration">Đăng ký</string>
+    <string name="or">or</string>
+
+
+
+
+</resources>
