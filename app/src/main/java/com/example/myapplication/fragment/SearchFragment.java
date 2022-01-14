@@ -59,6 +59,8 @@ public class SearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         rvList.setLayoutManager(layoutManager);
 
+
         return mView;
     }
+
 }

@@ -7,17 +7,21 @@ import java.io.Serializable;
 
 public class TruyenTranh implements Serializable {
 //    {
-//           tenTruyen: "Đào hoa bảo điển",
-//           tenChap: "Chap 452",
-//           linkAnh: "http://st.imageinstant.net/data/comics/133/dao-hoa-bao-dien-3241.jpg",
-//           capNhat: "19 giờ trước",
-//           theLoai : "Đô thị, Sắc hiệp",
-//           noiDung : "Truyện chưa tóm tắt nội dung"
-//           tacGia: "Đang cập nhật",
-//           tinhTrang: "Đang tiến hành",
+//        "id": 18,
+//            "tenTruyen" : "Chiến Hồn Tuyệt Thế",
+//            "tenChap" : "Chap 392",
+//            "linkAnh" : "http://st.imageinstant.net/data/comics/231/chien-hon-tuyet-the.jpg",
+//            "capNhat" : "1 tuần trước",
+//            "theLoai" : "Tiên hiệp, Huyền huyễn",
+//            "noiDung" : "Truyện chưa có tóm tắt",
+//            "tacGia" : "Đang cập nhật",
+//            "tinhTrang" : "Đang tiến hành"
 //    }
 
 
+    @SerializedName("id")
+    @Expose
+    int id;
     @SerializedName("tenTruyen")
     @Expose
     String tenTruyen;
@@ -43,8 +47,12 @@ public class TruyenTranh implements Serializable {
     @Expose
     String tinhTrang;
 
+    public TruyenTranh(){
 
-    public TruyenTranh(String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang) {
+    }
+
+    public TruyenTranh(int id, String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang) {
+        this.id = id;
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         this.linkAnh = linkAnh;
@@ -53,6 +61,14 @@ public class TruyenTranh implements Serializable {
         this.noiDung = noiDung;
         this.tacGia = tacGia;
         this.tinhTrang = tinhTrang;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTenTruyen() {

@@ -33,10 +33,17 @@
     <string name="password">Password</string>
     <string name="name">Name</string>
     <string name="save_pass">Lưu mật khẩu</string>
-    <string name="login">Đăng nhập</string>
-    <string name="registration">Đăng ký</string>
-    <string name="or">or</string>
-
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="update_pro_file">Update Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password_tv">Please send us your Email</string>
+    <string name="no_thanks">No Thank You</string>
+    <string name="send">Send</string>
 
 
 

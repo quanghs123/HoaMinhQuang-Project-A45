@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,47 +16,64 @@ import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteFragment extends Fragment {
     public static final String TAG = FavoriteFragment.class.getName();
     View mView;
+    TruyenTranh truyenTranh;
+    List<TruyenTranh> list;
     RecyclerView rvList;
     TruyenTranhAdapter truyenTranhAdapter;
-    List<TruyenTranh> list;
     MainActivity mMainActivity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_favorite,container,false);
+        mView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        rvList =mView.findViewById(R.id.rvList);
-
-        mMainActivity = (MainActivity) getActivity();
         list = new ArrayList<>();
+        rvList = mView.findViewById(R.id.rvList);
+        mMainActivity = (MainActivity) getActivity();
 
-//        TruyenTranh truyenTranh = getArguments()
-
-//        list.add(bundle));
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         rvList.setLayoutManager(layoutManager);
-
-
-
+        getListFavoriteFromRealTimeDatabase();
         truyenTranhAdapter = new TruyenTranhAdapter(list, getContext(), new TruyenTranhAdapter.IClickListener() {
             @Override
             public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
                 mMainActivity.goToTruyenTranhFragment(truyenTranh);
             }
         });
-
         rvList.setAdapter(truyenTranhAdapter);
 
         return mView;
+    }
+    private void getListFavoriteFromRealTimeDatabase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("List_Favorite");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    TruyenTranh truyenTranh = dataSnapshot.getValue(TruyenTranh.class);
+                    list.add(truyenTranh);
+                }
+                truyenTranhAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(),"Get List Favorite Fail",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

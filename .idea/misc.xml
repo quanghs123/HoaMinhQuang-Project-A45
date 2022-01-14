@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_gray_conner_10.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_indicator.xml" value="0.21614583333333334" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_while_conner_10_border_gray.xml" value="0.21614583333333334" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_while_conner_16.xml" value="0.21614583333333334" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_yellow_conner_10.xml" value="0.21614583333333334" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/bg_yellow_conner_16_top_left_top_right.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_button.xml" value="0.21614583333333334" />
@@ -16,17 +21,23 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_theo_doi.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/timkiem.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_change_password.xml" value="0.33" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_favorite.xml" value="0.10869565217391304" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_my_profile.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_registration.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_search.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_truyen_tranh.xml" value="0.5" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_truyentranh.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_img_manga.xml" value="0.22" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_header_nav.xml" value="0.10869565217391304" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_dialog_forgot_password.xml" value="0.25" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_forgot_login_dialog.xml" value="0.22" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_header_nav.xml" value="0.21" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/menu/menu_nav.xml" value="0.2" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/menu/menu_search.xml" value="0.1" />
       </map>

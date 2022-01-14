@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TruyenTranhFragment extends Fragment {
     public static final String TAG = TruyenTranhFragment.class.getName();
@@ -56,17 +60,41 @@ public class TruyenTranhFragment extends Fragment {
         btnDocTruyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onClickDocTruyen(truyenTranh);
             }
         });
 
         btnTheoDoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.sendDataToFavoriteFragment(truyenTranh);
+                onClickTheoDoi(truyenTranh);
             }
         });
 
         return mView;
+    }
+    private void onClickTheoDoi(TruyenTranh truyenTranh){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("List_Favorite");
+
+        String pathObject = String.valueOf(truyenTranh.getId());
+        myRef.child(pathObject).setValue(truyenTranh, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(getActivity()    ,"Add Favorite Success",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void onClickDocTruyen(TruyenTranh truyenTranh){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("List_History");
+
+        String pathObject = String.valueOf(truyenTranh.getId());
+        myRef.child(pathObject).setValue(truyenTranh, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+            }
+        });
     }
 }
