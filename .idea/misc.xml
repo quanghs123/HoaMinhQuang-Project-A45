@@ -12,6 +12,7 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_button.xml" value="0.21614583333333334" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_button_bo_theo_doi.xml" value="0.2128205128205128" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_button_theo_doi.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_content.xml" value="0.21614583333333334" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/drawable/ic_email.xml" value="0.21145833333333333" />
@@ -25,6 +26,7 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_change_password.xml" value="0.33" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_doc_truyen.xml" value="0.13677536231884058" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_favorite.xml" value="0.10869565217391304" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_home.xml" value="0.22" />
@@ -32,8 +34,12 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_my_profile.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_registration.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_search.xml" value="0.22" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_truyen_tranh.xml" value="0.5" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_truyen_tranh.xml" value="0.33" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_anh_truyen.xml" value="0.22" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_chap_truyen.xml" value="0.14221014492753623" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_truyentranh.xml" value="0.25" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_anh_truyen.xml" value="0.13677536231884058" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_chap.xml" value="0.13677536231884058" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_img_manga.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_dialog_forgot_password.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_forgot_login_dialog.xml" value="0.22" />

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TruyenTranh implements Serializable {
 //    {
@@ -46,12 +47,15 @@ public class TruyenTranh implements Serializable {
     @SerializedName("tinhTrang")
     @Expose
     String tinhTrang;
+    @SerializedName("chapTruyen")
+    @Expose
+    List<ChapTruyen> chapTruyen;
 
     public TruyenTranh(){
 
     }
 
-    public TruyenTranh(int id, String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang) {
+    public TruyenTranh(int id, String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang, List<ChapTruyen> chapTruyen) {
         this.id = id;
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
@@ -61,6 +65,7 @@ public class TruyenTranh implements Serializable {
         this.noiDung = noiDung;
         this.tacGia = tacGia;
         this.tinhTrang = tinhTrang;
+        this.chapTruyen = chapTruyen;
     }
 
     public int getId() {
@@ -133,5 +138,13 @@ public class TruyenTranh implements Serializable {
 
     public void setTinhTrang(String tinhTrang) {
         this.tinhTrang = tinhTrang;
+    }
+
+    public List<ChapTruyen> getChapTruyen() {
+        return chapTruyen;
+    }
+
+    public void setChapTruyen(List<ChapTruyen> chapTruyen) {
+        this.chapTruyen = chapTruyen;
     }
 }

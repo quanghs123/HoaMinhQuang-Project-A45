@@ -16,6 +16,7 @@ import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,19 +61,45 @@ public class FavoriteFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("List_Favorite");
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    TruyenTranh truyenTranh = dataSnapshot.getValue(TruyenTranh.class);
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
+                if(truyenTranh!=null){
                     list.add(truyenTranh);
+                    truyenTranhAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
+                if(truyenTranh == null || list == null || list.isEmpty()){
+                    return;
+                }
+                for(int i = 0;i<list.size();i++){
+                    if(truyenTranh.getId() == list.get(i).getId()){
+                        list.remove(list.get(i));
+                        break;
+                    }
                 }
                 truyenTranhAdapter.notifyDataSetChanged();
             }
 
             @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(),"Get List Favorite Fail",Toast.LENGTH_SHORT).show();
+
             }
         });
     }

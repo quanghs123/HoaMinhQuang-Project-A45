@@ -1,212 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvTenTruyen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Đào Hoa Bảo Điển"
-        android:textAllCaps="true"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Cập nhật lúc :"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/tvCapNhat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" 19 giờ trước"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="]"
-            android:textSize="15sp" />
-        />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imgManga"
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_manga_1" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_my_profile" />
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/tac_gia"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tvTacGia"
+            android:id="@+id/tvTenTruyen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:text="@string/tac_gia"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Đào Hoa Bảo Điển"
+            android:textAllCaps="true"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_connect" />
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/tinh_trang"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tvTinhTrang"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:text="@string/tinh_trang_name"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_classify" />
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="2dp"
-            android:text="@string/the_loai"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tvTheLoai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:text="@string/the_loai_name"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <RelativeLayout
-            android:id="@+id/btnDocTruyen"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:background="@drawable/ic_button_doc_truyen">
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/doc_truyen"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:text="[Cập nhật lúc :"
+                android:textSize="15sp" />
 
-        <RelativeLayout
-            android:id="@+id/btnTheoDoi"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginStart="80dp"
-            android:background="@drawable/ic_button_theo_doi">
+            <TextView
+                android:id="@+id/tvCapNhat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 19 giờ trước"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="]"
+                android:textSize="15sp" />
+            />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgManga"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_manga_1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_follow" />
+                android:src="@drawable/ic_my_profile" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/tac_gia"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTacGia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:text="@string/tac_gia"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_connect" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/tinh_trang"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTinhTrang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:text="@string/tinh_trang_name"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_classify" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:text="@string/the_loai"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvTheLoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:text="@string/the_loai_name"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:id="@+id/btnDocTruyen"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_button_doc_truyen">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/doc_truyen"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/btnTheoDoi"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginStart="80dp"
+                android:background="@drawable/ic_button_theo_doi">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_follow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/theo_doi"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/btnBoTheoDoi"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginStart="80dp"
+                android:background="@drawable/ic_button_bo_theo_doi"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_follow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/bo_theo_doi"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_content" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/theo_doi"
-                android:textColor="@color/white"
+                android:layout_marginStart="2dp"
+                android:text="@string/noi_dung"
+                android:textColor="#038392"
                 android:textSize="20sp" />
-        </RelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_content" />
+        <TextView
+            android:id="@+id/tvNoiDung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/noi_dung_content"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/noi_dung"
-            android:textColor="#038392"
-            android:textSize="20sp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Chap truyện"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginStart="10dp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvNoiDung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/noi_dung_content"
-        android:textSize="20sp" />
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

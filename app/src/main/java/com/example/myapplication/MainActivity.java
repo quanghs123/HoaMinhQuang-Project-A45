@@ -31,8 +31,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.Module.ChapTruyen;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.fragment.ChangePasswordFragment;
+import com.example.myapplication.fragment.DocTruyenFragment;
 import com.example.myapplication.fragment.FavoriteFragment;
 import com.example.myapplication.fragment.HistoryFragment;
 import com.example.myapplication.fragment.HomeFragment;
@@ -243,12 +245,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
         fragmentTransaction.commit();
     }
-    public void sendDataToFavoriteFragment(TruyenTranh truyenTranh){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("object",truyenTranh);
-        FavoriteFragment favoriteFragment = new FavoriteFragment();
-        favoriteFragment.setArguments(bundle);
-    }
     public void showUserInformation(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null){
@@ -285,5 +281,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.setType("imgage/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         mActivityResultLauncher.launch(Intent.createChooser(intent,"Select Picture"));
+    }
+    public void goToDocTruyenFragment(TruyenTranh truyenTranh,ChapTruyen chapTruyen){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        DocTruyenFragment docTruyenFragment = new DocTruyenFragment();
+
+
+        fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,chapTruyen));
+        fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
+        fragmentTransaction.commit();
     }
 }
