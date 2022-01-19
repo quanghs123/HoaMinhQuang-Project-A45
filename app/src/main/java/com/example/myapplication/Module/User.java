@@ -1,13 +1,31 @@
 package com.example.myapplication.Module;
 
-import android.text.TextUtils;
-import android.util.Patterns;
-
+import java.util.List;
 
 public class User {
+    String userId;
     String email;
     String password;
-    String name;
+    List<TruyenTranh> listFavorite;
+    List<TruyenTranh> listHistory;
+    public User(){
+    }
+
+    public User(String userId, String email, String password, List<TruyenTranh> listFavorite, List<TruyenTranh> listHistory) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.listFavorite = listFavorite;
+        this.listHistory = listHistory;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getEmail() {
         return email;
@@ -25,24 +43,19 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public List<TruyenTranh> getListFavorite() {
+        return listFavorite;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setListFavorite(List<TruyenTranh> listFavorite) {
+        this.listFavorite = listFavorite;
     }
 
-    public User(String email, String password, String name) {
+    public List<TruyenTranh> getListHistory() {
+        return listHistory;
+    }
 
-        this.email = email;
-        this.password = password;
-        this.name = name;
-    }
-    public boolean isValidEmail(){
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-    public boolean isValidPassword(){
-        return !TextUtils.isEmpty(password) && password.length()>=6;
+    public void setListHistory(List<TruyenTranh> listHistory) {
+        this.listHistory = listHistory;
     }
 }

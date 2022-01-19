@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adapter.AnhTruyenAdapter;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.Module.AnhTruyen;
 import com.example.myapplication.Module.ChapTruyen;
 import com.example.myapplication.Module.TruyenTranh;
@@ -22,20 +26,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DocTruyenFragment extends Fragment {
-    List<AnhTruyen> list;
+    List<AnhTruyen> anhTruyenList;
     ChapTruyen chapTruyen;
     TruyenTranh truyenTranh;
     AnhTruyenAdapter anhTruyenAdapter;
     RecyclerView rvList;
+    int idChap;
+    ImageView imgBackChap,imgNextChap;
+    MainActivity mMainActivity;
     View mView;
 
-    public static DocTruyenFragment getInstance(TruyenTranh truyenTranh,ChapTruyen chapTruyen){
+    public static DocTruyenFragment getInstance(TruyenTranh truyenTranh,int i){
         DocTruyenFragment docTruyenFragment = new DocTruyenFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("object_chap_truyen",chapTruyen);
+        bundle.putSerializable("object_id_chap",i);
         bundle.putSerializable("object_truyen_tranh",truyenTranh);
         docTruyenFragment.setArguments(bundle);
 
@@ -46,23 +54,41 @@ public class DocTruyenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_doc_truyen,container,false);
 
-        initUi();
+        anhTruyenList = new ArrayList<>();
+        mMainActivity = (MainActivity) getActivity();
+
+        rvList = mView.findViewById(R.id.rvList);
+        imgBackChap = mView.findViewById(R.id.imgBackChap);
+        imgNextChap = mView.findViewById(R.id.imgNextChap);
+
+
         Bundle bundle = getArguments();
         if(bundle != null){
-            chapTruyen = (ChapTruyen) bundle.get("object_chap_truyen");
+            idChap = (int) bundle.get("object_id_chap");
             truyenTranh = (TruyenTranh) bundle.get("object_truyen_tranh");
-            list = chapTruyen.getAnhTruyenList();
-            getListAnh(truyenTranh.getId(),chapTruyen.getId());
-            anhTruyenAdapter = new AnhTruyenAdapter(list,getContext());
+            getListAnh(truyenTranh.getId(),idChap);
+            anhTruyenAdapter = new AnhTruyenAdapter(anhTruyenList,getActivity());
             rvList.setAdapter(anhTruyenAdapter);
         }
-
-        return mView;
-    }
-    private void initUi(){
-        rvList = mView.findViewById(R.id.rvList);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),1);
         rvList.setLayoutManager(layoutManager);
+
+        imgBackChap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickBackChap();
+            }
+        });
+
+        imgNextChap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickNextChap();
+            }
+        });
+
+
+        return mView;
     }
     private void getListAnh(int i,int j){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -71,18 +97,33 @@ public class DocTruyenFragment extends Fragment {
         myRef.child("list_truyen/"+i+"/chapTruyen/"+j+"/anhTruyenList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
+                anhTruyenList.clear();
                 for(DataSnapshot snap : snapshot.getChildren()){
                     AnhTruyen anhTruyen = snap.getValue(AnhTruyen.class);
-                    list.add(anhTruyen);
+                    anhTruyenList.add(anhTruyen);
                 }
                 anhTruyenAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getActivity(),"Fail",Toast.LENGTH_SHORT).show();
             }
         });
     }
+    private void onClickBackChap(){
+        if(idChap == 1){
+            Toast.makeText(getActivity(),"This is the first chapter",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mMainActivity.goToDocTruyenFragment(truyenTranh,idChap-1);
+    }
+    private void onClickNextChap(){
+        if(idChap == truyenTranh.getChapTruyen().size()){
+            Toast.makeText(getActivity(),"This is the last chapter",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mMainActivity.goToDocTruyenFragment(truyenTranh,idChap+1);
+    }
+
 }

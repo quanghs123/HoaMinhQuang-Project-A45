@@ -26,7 +26,7 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_change_password.xml" value="0.33" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_doc_truyen.xml" value="0.13677536231884058" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_doc_truyen.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_favorite.xml" value="0.10869565217391304" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_home.xml" value="0.22" />
@@ -37,6 +37,7 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_truyen_tranh.xml" value="0.33" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_anh_truyen.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_chap_truyen.xml" value="0.14221014492753623" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_truyen_chu.xml" value="0.11548913043478261" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/icon_truyentranh.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_anh_truyen.xml" value="0.13677536231884058" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_chap.xml" value="0.13677536231884058" />

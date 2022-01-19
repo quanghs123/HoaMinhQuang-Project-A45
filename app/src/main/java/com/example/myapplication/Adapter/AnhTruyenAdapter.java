@@ -36,7 +36,13 @@ public class AnhTruyenAdapter extends RecyclerView.Adapter<AnhTruyenAdapter.View
     @Override
     public void onBindViewHolder(@NonNull AnhTruyenAdapter.Viewholder holder, int position) {
         AnhTruyen anhTruyen = anhTruyenList.get(position);
-        Glide.with(this.mContext).load(anhTruyen.getLinkAnh()).into(holder.imgAnhTruyen);
+        Glide
+                .with(mContext)
+                .load(anhTruyen.getLinkAnh())
+                .error(R.drawable.img_error)
+                .placeholder(R.drawable.img_error)
+                .into(holder.imgAnhTruyen);
+
     }
 
     @Override

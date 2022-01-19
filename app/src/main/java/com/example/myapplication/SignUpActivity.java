@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -12,10 +13,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Module.TruyenTranh;
+import com.example.myapplication.Module.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -23,6 +32,8 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
     ProgressDialog progressDialog;
     TextView tvMessage;
+    List<TruyenTranh> listFavorite;
+    List<TruyenTranh> listHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,9 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btnSignUp);
         tvMessage = findViewById(R.id.tvMessage);
         progressDialog = new ProgressDialog(this);
+
+        listFavorite = new ArrayList<>();
+        listHistory = new ArrayList<>();
     }
     private void initListener(){
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +82,9 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
+                                User user = new User(auth.getUid(),strEmail,strPassword,listFavorite,listHistory);
+                                addUserToRealtimeDatabase(auth.getUid(),user);
                                 // Sign in success, update UI with the signed-in user's information
-
                                 Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
                                 startActivity(intent);
                                 finishAffinity();
@@ -81,7 +96,16 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+    private void addUserToRealtimeDatabase(String strUid, User user){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user");
 
+        myRef.child(strUid).setValue(user, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 
+            }
+        });
     }
 }

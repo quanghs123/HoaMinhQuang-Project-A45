@@ -1,7 +1,6 @@
 package com.example.myapplication.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Adapter.ChapTruyenAdapter;
+import com.example.myapplication.Adapter.ChapTruyenChuAdapter;
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.Module.ChapTruyen;
+import com.example.myapplication.Module.ChapTruyenChu;
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,16 +33,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TruyenTranhFragment extends Fragment {
-    public static final String TAG = TruyenTranhFragment.class.getName();
+public class TruyenChuFragment extends Fragment {
+    public static final String TAG = TruyenChuFragment.class.getName();
     TextView tvTenTruyen,tvCapNhat,tvTacGia,tvTinhTrang,tvTheLoai,tvNoiDung;
     ImageView imgManga;
     RelativeLayout btnDocTruyen, btnTheoDoi,btnBoTheoDoi;
     MainActivity mMainActivity;
-    TruyenTranh truyenTranh;
+    TruyenChu truyenChu;
     RecyclerView rvList;
-    ChapTruyenAdapter chapTruyenAdapter;
-    List<ChapTruyen> chapTruyenList;
+    ChapTruyenChuAdapter chapTruyenAdapter;
+    List<ChapTruyenChu> chapTruyenList;
     View mView;
     @Nullable
     @Override
@@ -66,29 +66,29 @@ public class TruyenTranhFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if(bundle != null){
-            truyenTranh = (TruyenTranh) bundle.get("object_manga");
-            tvTenTruyen.setText(truyenTranh.getTenTruyen());
-            tvCapNhat.setText(truyenTranh.getCapNhat());
-            tvTacGia.setText(truyenTranh.getTacGia());
-            tvTinhTrang.setText(truyenTranh.getTinhTrang());
-            tvTheLoai.setText(truyenTranh.getTheLoai());
-            tvNoiDung.setText(truyenTranh.getNoiDung());
-            Glide.with(this).load(truyenTranh.getLinkAnh()).into(imgManga);
-            getListChap(truyenTranh.getId());
-            chapTruyenAdapter = new ChapTruyenAdapter(chapTruyenList, new ChapTruyenAdapter.IClickListener() {
+            truyenChu = (TruyenChu) bundle.get("object_manga");
+            tvTenTruyen.setText(truyenChu.getTenTruyen());
+            tvCapNhat.setText(truyenChu.getCapNhat());
+            tvTacGia.setText(truyenChu.getTacGia());
+            tvTinhTrang.setText(truyenChu.getTinhTrang());
+            tvTheLoai.setText(truyenChu.getTheLoai());
+            tvNoiDung.setText(truyenChu.getNoiDung());
+            Glide.with(this).load(truyenChu.getLinkAnh()).into(imgManga);
+            getListChap(truyenChu.getId());
+            chapTruyenAdapter = new ChapTruyenChuAdapter(chapTruyenList, new ChapTruyenChuAdapter.IClickListener() {
                 @Override
-                public void onClickItemChapTruyen(ChapTruyen chapTruyen) {
-                    clickChapTruyen(truyenTranh,chapTruyen.getId());
+                public void onClickItemChapTruyen(ChapTruyenChu chapTruyen) {
+
                 }
             });
             rvList.setAdapter(chapTruyenAdapter);
-            if(truyenTranh.isFavorite()){
-                btnTheoDoi.setVisibility(View.GONE);
-                btnBoTheoDoi.setVisibility(View.VISIBLE);
-            }else{
-                btnTheoDoi.setVisibility(View.VISIBLE);
-                btnBoTheoDoi.setVisibility(View.GONE);
-            }
+//            if(truyenTranh.isFavorite()){
+//                btnTheoDoi.setVisibility(View.GONE);
+//                btnBoTheoDoi.setVisibility(View.VISIBLE);
+//            }else{
+//                btnTheoDoi.setVisibility(View.VISIBLE);
+//                btnBoTheoDoi.setVisibility(View.GONE);
+//            }
         }
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),1);
@@ -97,20 +97,20 @@ public class TruyenTranhFragment extends Fragment {
         btnDocTruyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickDocTruyen(truyenTranh);
+//                onClickDocTruyen(truyenTranh);
             }
         });
 
         btnTheoDoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickTheoDoi(truyenTranh);
+//                onClickTheoDoi(truyenTranh);
             }
         });
         btnBoTheoDoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickBoTheoDoi(truyenTranh);
+//                onClickBoTheoDoi(truyenTranh);
             }
         });
 
@@ -186,12 +186,12 @@ public class TruyenTranhFragment extends Fragment {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference();
 
-        myRef.child("list_truyen/"+i+"/chapTruyen").addValueEventListener(new ValueEventListener() {
+        myRef.child("list_truyen_chu/"+i+"/chapTruyen").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chapTruyenList.clear();
                 for(DataSnapshot snap : snapshot.getChildren()){
-                    ChapTruyen chapTruyen = snap.getValue(ChapTruyen.class);
+                    ChapTruyenChu chapTruyen = snap.getValue(ChapTruyenChu.class);
                     chapTruyenList.add(chapTruyen);
                 }
                 chapTruyenAdapter.notifyDataSetChanged();

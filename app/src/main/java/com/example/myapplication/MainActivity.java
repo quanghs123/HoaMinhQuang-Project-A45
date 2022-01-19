@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Module.ChapTruyen;
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.fragment.ChangePasswordFragment;
 import com.example.myapplication.fragment.DocTruyenFragment;
@@ -40,6 +42,7 @@ import com.example.myapplication.fragment.HistoryFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.MyProfileFragment;
 import com.example.myapplication.fragment.SearchFragment;
+import com.example.myapplication.fragment.TruyenChuFragment;
 import com.example.myapplication.fragment.TruyenTranhFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,11 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toast mToast;
     ImageView imgAvatar;
     TextView tvName,tvEmail;
-    MyProfileFragment mMyProfileFragment = new MyProfileFragment();
+    final private MyProfileFragment mMyProfileFragment = new MyProfileFragment();
 
     NavigationView mNavigationView;
     DrawerLayout mDrawerLayout;
-    ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    final private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode()==RESULT_OK){
@@ -245,6 +248,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
         fragmentTransaction.commit();
     }
+    public void goToTruyenChuFragment(TruyenChu truyenChu){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        TruyenChuFragment truyenChuFragment = new TruyenChuFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("object_manga",truyenChu);
+        truyenChuFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.content_frame,truyenChuFragment);
+        fragmentTransaction.addToBackStack(TruyenChuFragment.TAG);
+        fragmentTransaction.commit();
+    }
     public void showUserInformation(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null){
@@ -282,12 +296,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.setAction(Intent.ACTION_GET_CONTENT);
         mActivityResultLauncher.launch(Intent.createChooser(intent,"Select Picture"));
     }
-    public void goToDocTruyenFragment(TruyenTranh truyenTranh,ChapTruyen chapTruyen){
+    public void goToDocTruyenFragment(TruyenTranh truyenTranh,int i){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         DocTruyenFragment docTruyenFragment = new DocTruyenFragment();
 
 
-        fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,chapTruyen));
+        fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,   i));
         fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
         fragmentTransaction.commit();
     }

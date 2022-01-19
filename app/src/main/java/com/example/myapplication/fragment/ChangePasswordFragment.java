@@ -70,7 +70,6 @@ public class ChangePasswordFragment extends Fragment {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(),"User password updated.",Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     });

@@ -1,48 +1,24 @@
 package com.example.myapplication.Module;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
 
-public class TruyenTranh implements Serializable {
-    @SerializedName("id")
-    @Expose
+public class TruyenChu  implements Serializable {
     int id;
-    @SerializedName("tenTruyen")
-    @Expose
     String tenTruyen;
-    @SerializedName("tenChap")
-    @Expose
     String tenChap;
-    @SerializedName("linkAnh")
-    @Expose
     String linkAnh;
-    @SerializedName("capNhat")
-    @Expose
     String capNhat;
-    @SerializedName("theLoai")
-    @Expose
     String theLoai;
-    @SerializedName("noiDung")
-    @Expose
     String noiDung;
-    @SerializedName("tacGia")
-    @Expose
     String tacGia;
-    @SerializedName("tinhTrang")
-    @Expose
     String tinhTrang;
-    @SerializedName("chapTruyen")
-    @Expose
-    List<ChapTruyen> chapTruyen;
+    List<ChapTruyenChu> chapTruyen;
     boolean favorite;
-    public TruyenTranh(){
-
+    public TruyenChu(){
     }
 
-    public TruyenTranh(int id, String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang, List<ChapTruyen> chapTruyen, boolean favorite) {
+    public TruyenChu(int id, String tenTruyen, String tenChap, String linkAnh, String capNhat, String theLoai, String noiDung, String tacGia, String tinhTrang, List<ChapTruyenChu> chapTruyen, boolean favorite) {
         this.id = id;
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
@@ -128,11 +104,11 @@ public class TruyenTranh implements Serializable {
         this.tinhTrang = tinhTrang;
     }
 
-    public List<ChapTruyen> getChapTruyen() {
+    public List<ChapTruyenChu> getChapTruyen() {
         return chapTruyen;
     }
 
-    public void setChapTruyen(List<ChapTruyen> chapTruyen) {
+    public void setChapTruyen(List<ChapTruyenChu> chapTruyen) {
         this.chapTruyen = chapTruyen;
     }
 

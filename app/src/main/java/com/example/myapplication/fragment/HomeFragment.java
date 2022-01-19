@@ -18,9 +18,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.API.APIClient;
 import com.example.myapplication.Adapter.ImageAdapter;
+import com.example.myapplication.Adapter.TruyenChuAdapter;
 import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Module.Image;
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
 import com.google.firebase.database.ChildEventListener;
@@ -28,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +50,10 @@ public class HomeFragment extends Fragment {
     List<Image> list;
     ImageAdapter imageAdapter;
     Timer mTimer;
-    RecyclerView rvList;
+    RecyclerView rvList,rvList1;
     TruyenTranhAdapter truyenTranhAdapter;
+    TruyenChuAdapter truyenChuAdapter;
+    List<TruyenChu> truyenChuList;
     List<TruyenTranh> truyenTranhList;
     View mView;
     MainActivity mMainActivity;
@@ -60,18 +65,23 @@ public class HomeFragment extends Fragment {
         viewPager = mView.findViewById(R.id.viewPager);
         circleIndicator = mView.findViewById(R.id.circle_indicator);
         rvList = mView.findViewById(R.id.rvList);
+        rvList1 = mView.findViewById(R.id.rvList1);
 
         truyenTranhList = new ArrayList<>();
+        truyenChuList = new ArrayList<>();
+
         list = new ArrayList<>();
 
         mMainActivity = (MainActivity) getActivity();
 
 //        getListTruyen();
         getListTruyenFromRealTimeDatabase();
-
+        getListTruyenChu();
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this.getContext(),3);
         rvList.setLayoutManager(layoutManager);
+        rvList1.setLayoutManager(layoutManager1);
 
         truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
             @Override
@@ -80,6 +90,14 @@ public class HomeFragment extends Fragment {
             }
         });
         rvList.setAdapter(truyenTranhAdapter);
+
+        truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
+            @Override
+            public void onClickItemTruyenChu(TruyenChu truyenChu) {
+                mMainActivity.goToTruyenChuFragment(truyenChu);
+            }
+        });
+        rvList1.setAdapter(truyenChuAdapter);
 
         mMainActivity.setList1(truyenTranhList);
 
@@ -106,6 +124,40 @@ public class HomeFragment extends Fragment {
                         getListImage(new Image(truyenTranh.getLinkAnh()));
                     }
                     truyenTranhAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void getListTruyenChu(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_truyen_chu");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
+                if(truyenChu!=null){
+                    truyenChuList.add(truyenChu);
+                    truyenChuAdapter.notifyDataSetChanged();
                 }
             }
 

@@ -5,8 +5,13 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/imgBackChap"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_back_chap"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
@@ -20,7 +25,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/imgNextChap"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_next_chap"/>
     </LinearLayout>
 </LinearLayout>
