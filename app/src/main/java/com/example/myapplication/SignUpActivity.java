@@ -33,8 +33,10 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
     ProgressDialog progressDialog;
     TextView tvMessage;
+    List<TruyenTranh> listTruyenTranh;
     List<TruyenTranh> listFavorite;
     List<TruyenTranh> listHistory;
+    List<TruyenChu> listTruyenChu;
     List<TruyenChu> listTruyenChuFavorite;
     List<TruyenChu> listTruyenChuHistory;
 
@@ -55,8 +57,10 @@ public class SignUpActivity extends AppCompatActivity {
         tvMessage = findViewById(R.id.tvMessage);
         progressDialog = new ProgressDialog(this);
 
+        listTruyenTranh = new ArrayList<>();
         listFavorite = new ArrayList<>();
         listHistory = new ArrayList<>();
+        listTruyenChu = new ArrayList<>();
         listTruyenChuFavorite = new ArrayList<>();
         listTruyenChuHistory = new ArrayList<>();
     }
@@ -87,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                User user = new User(auth.getUid(),strEmail,strPassword,listFavorite,listHistory,listTruyenChuFavorite,listTruyenChuHistory);
+                                User user = new User(auth.getUid(),strEmail,strPassword,listTruyenTranh,listFavorite,listHistory,listTruyenChu,listTruyenChuFavorite,listTruyenChuHistory);
                                 addUserToRealtimeDatabase(auth.getUid(),user);
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
@@ -113,4 +117,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+    private void 
 }
