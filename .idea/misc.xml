@@ -27,8 +27,9 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_change_password.xml" value="0.33" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_doc_truyen.xml" value="0.22" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_doc_truyen_chu.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_favorite.xml" value="0.10869565217391304" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_history.xml" value="0.1" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_history.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/fragment_my_profile.xml" value="0.25" />
@@ -44,7 +45,7 @@
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/item_img_manga.xml" value="0.22" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_dialog_forgot_password.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_forgot_login_dialog.xml" value="0.22" />
-        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_header_nav.xml" value="0.21" />
+        <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/layout/layout_header_nav.xml" value="0.25" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/menu/menu_nav.xml" value="0.2" />
         <entry key="..\:/DevProAndroid/Homework/HoaMinhQuang-Project-A45/app/src/main/res/menu/menu_search.xml" value="0.1" />
       </map>

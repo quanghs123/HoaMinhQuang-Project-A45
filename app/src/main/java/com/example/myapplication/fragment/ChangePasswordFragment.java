@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ChangePasswordFragment extends Fragment {
     public static final String TAG = ChangePasswordFragment.class.getName();
@@ -70,10 +72,13 @@ public class ChangePasswordFragment extends Fragment {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(),"User password updated.",Toast.LENGTH_SHORT).show();
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("list_user/"+user.getUid());
+                                myRef.child("password").setValue(strNewPassword);
                             }
                         }
                     });
         }
-
     }
 }

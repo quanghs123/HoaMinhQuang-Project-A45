@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import com.example.myapplication.Module.ChapTruyen;
 import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.fragment.ChangePasswordFragment;
+import com.example.myapplication.fragment.DocTruyenChuFragment;
 import com.example.myapplication.fragment.DocTruyenFragment;
 import com.example.myapplication.fragment.FavoriteFragment;
 import com.example.myapplication.fragment.HistoryFragment;
@@ -49,12 +51,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     public static final int MY_REQUEST_CODE = 10;
+    public static boolean CHECK = true;
 
     static final int FRAGMENT_HOME=0;
     static final int FRAGMENT_FAVORITE=1;
@@ -65,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int mCurrentFragment = FRAGMENT_HOME;
     SearchView searchView;
     
-    List<TruyenTranh> list1,list2;
+    List<TruyenTranh> list1;
+    List<TruyenChu> list2;
+    ImageView btnChangeTruyenTranh;
+    ImageView btnChangeTruyenChu;
 
     Long backPressedTime = System.currentTimeMillis();
     Toast mToast;
@@ -119,13 +126,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         list1 = new ArrayList<>();
         list2 = new ArrayList<>();
 
+        btnChangeTruyenTranh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickChangeImg();
+                btnChangeTruyenTranh.setVisibility(View.GONE);
+                btnChangeTruyenChu.setVisibility(View.VISIBLE);
+            }
+        });
+        btnChangeTruyenChu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickChangeImg();
+                btnChangeTruyenTranh.setVisibility(View.VISIBLE);
+                btnChangeTruyenChu.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void onClickChangeImg() {
+        CHECK = !CHECK;
+        replaceFragment(new HomeFragment());
     }
 
     private void initUi(){
-        mNavigationView = findViewById(R.id.navigation_view );
+        mNavigationView = findViewById(R.id.navigation_view);
         imgAvatar = mNavigationView.getHeaderView(0).findViewById(R.id.imgAvatar);
         tvName = mNavigationView.getHeaderView(0).findViewById(R.id.tvName);
         tvEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tvEmail);
+        btnChangeTruyenTranh = mNavigationView.getHeaderView(0).findViewById(R.id.btnChangeTruyenTranh);
+        btnChangeTruyenChu = mNavigationView.getHeaderView(0).findViewById(R.id.btnChangeTruyenChu);
     }
 
     @Override
@@ -176,7 +206,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(!searchView.isIconified()){
             searchView.setIconified(true);
         }
-        super.onBackPressed();
+        else{
+            super.onBackPressed();
+        }
 //        else if(backPressedTime + 2000 > System.currentTimeMillis()){
 //            mToast.cancel();
 //            super.onBackPressed();
@@ -204,28 +236,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                replaceSearchFragment(timKiem(list1,query));
-
+                if(CHECK){
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list_truyen", (Serializable) timKiem(list1,query));
+                    searchFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, searchFragment);
+                    fragmentTransaction.addToBackStack(SearchFragment.TAG);
+                    fragmentTransaction.commit();
+                }
+                else{
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list_truyen_chu", (Serializable) timKiemTruyenChu(list2,query));
+                    searchFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, searchFragment);
+                    fragmentTransaction.addToBackStack(SearchFragment.TAG);
+                    fragmentTransaction.commit();
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                replaceSearchFragment(timKiem(list1,newText));
+                if(CHECK){
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list_truyen", (Serializable) timKiem(list1,newText));
+                    searchFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, searchFragment);
+                    fragmentTransaction.addToBackStack(SearchFragment.TAG);
+                    fragmentTransaction.commit();
+                }
+                else{
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list_truyen_chu", (Serializable) timKiemTruyenChu(list2,newText));
+                    searchFragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, searchFragment);
+                    fragmentTransaction.addToBackStack(SearchFragment.TAG);
+                    fragmentTransaction.commit();
+                }
                 return false;
             }
         });
         return true;
     }
-    private void replaceSearchFragment(List<TruyenTranh> tranhs){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, SearchFragment.getInstance(tranhs));
-        fragmentTransaction.addToBackStack(SearchFragment.TAG);
-        fragmentTransaction.commit();
-    }
 
     public void setList1(List<TruyenTranh> list1) {
         this.list1 = list1;
+    }
+
+    public void setList2(List<TruyenChu> list2) {
+        this.list2 = list2;
     }
     private List<TruyenTranh> timKiem(List<TruyenTranh> ls, String strSearch){
         List<TruyenTranh> tranhs = new ArrayList<>();
@@ -236,7 +303,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return tranhs;
     }
-
+    private List<TruyenChu> timKiemTruyenChu(List<TruyenChu> ls, String strSearch){
+        List<TruyenChu> truyenChus = new ArrayList<>();
+        for(TruyenChu truyenChu : ls){
+            if(truyenChu.getTenTruyen().toLowerCase().contains(strSearch.toLowerCase())){
+                truyenChus.add(truyenChu);
+            }
+        }
+        return truyenChus;
+    }
     public void goToTruyenTranhFragment(TruyenTranh truyenTranh){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         TruyenTranhFragment truyenTranhFragment = new TruyenTranhFragment();
@@ -301,8 +376,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DocTruyenFragment docTruyenFragment = new DocTruyenFragment();
 
 
-        fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,   i));
+        fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,i));
         fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
+        fragmentTransaction.commit();
+    }
+    public void goToDocTruyenChuFragment(TruyenChu truyenChu,int i){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+
+        fragmentTransaction.replace(R.id.content_frame,DocTruyenChuFragment.getInstance(truyenChu,i));
+        fragmentTransaction.addToBackStack(TruyenChuFragment.TAG);
         fragmentTransaction.commit();
     }
 }

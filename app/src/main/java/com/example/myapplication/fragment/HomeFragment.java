@@ -1,5 +1,7 @@
 package com.example.myapplication.fragment;
 
+import static com.example.myapplication.MainActivity.CHECK;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -50,7 +52,7 @@ public class HomeFragment extends Fragment {
     List<Image> list;
     ImageAdapter imageAdapter;
     Timer mTimer;
-    RecyclerView rvList,rvList1;
+    RecyclerView rvList;
     TruyenTranhAdapter truyenTranhAdapter;
     TruyenChuAdapter truyenChuAdapter;
     List<TruyenChu> truyenChuList;
@@ -65,48 +67,44 @@ public class HomeFragment extends Fragment {
         viewPager = mView.findViewById(R.id.viewPager);
         circleIndicator = mView.findViewById(R.id.circle_indicator);
         rvList = mView.findViewById(R.id.rvList);
-        rvList1 = mView.findViewById(R.id.rvList1);
-
-        truyenTranhList = new ArrayList<>();
-        truyenChuList = new ArrayList<>();
-
-        list = new ArrayList<>();
-
         mMainActivity = (MainActivity) getActivity();
+        list = new ArrayList<>();
+        if(CHECK){
+            truyenTranhList = new ArrayList<>();
+            getListTruyenFromRealTimeDatabase();
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+            rvList.setLayoutManager(layoutManager);
+            truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
+                    mMainActivity.goToTruyenTranhFragment(truyenTranh);
+                }
+            });
+            rvList.setAdapter(truyenTranhAdapter);
+            mMainActivity.setList1(truyenTranhList);
+        }
+        else{
+            truyenChuList = new ArrayList<>();
+            getListTruyenChu();
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+            rvList.setLayoutManager(layoutManager);
+            truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenChu(TruyenChu truyenChu) {
+                    mMainActivity.goToTruyenChuFragment(truyenChu);
+                }
+            });
+            rvList.setAdapter(truyenChuAdapter);
+            mMainActivity.setList2(truyenChuList);
+        }
 
-//        getListTruyen();
-        getListTruyenFromRealTimeDatabase();
-        getListTruyenChu();
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
-        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this.getContext(),3);
-        rvList.setLayoutManager(layoutManager);
-        rvList1.setLayoutManager(layoutManager1);
-
-        truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
-            @Override
-            public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
-                mMainActivity.goToTruyenTranhFragment(truyenTranh);
-            }
-        });
-        rvList.setAdapter(truyenTranhAdapter);
-
-        truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
-            @Override
-            public void onClickItemTruyenChu(TruyenChu truyenChu) {
-                mMainActivity.goToTruyenChuFragment(truyenChu);
-            }
-        });
-        rvList1.setAdapter(truyenChuAdapter);
-
-        mMainActivity.setList1(truyenTranhList);
 
         imageAdapter = new ImageAdapter(getActivity(),list);
         viewPager.setAdapter(imageAdapter);
         circleIndicator.setViewPager(viewPager);
         imageAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
 
-        autoSlideImage();
+//        autoSlideImage();
 
         return mView;
     }
@@ -121,7 +119,8 @@ public class HomeFragment extends Fragment {
                 if(truyenTranh!=null){
                     truyenTranhList.add(truyenTranh);
                     if(list.size()<4){
-                        getListImage(new Image(truyenTranh.getLinkAnh()));
+                        list.add(new Image(truyenTranh.getLinkAnh()));
+                        imageAdapter.notifyDataSetChanged();
                     }
                     truyenTranhAdapter.notifyDataSetChanged();
                 }
@@ -129,7 +128,16 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
+                if(truyenTranh == null ||truyenTranhList == null || truyenTranhList.isEmpty()){
+                    return;
+                }
+                for(int i=0 ;i<truyenTranhList.size();i++){
+                    if(truyenTranh.getId() == truyenTranhList.get(i).getId()){
+                        truyenTranhList.set(i,truyenTranh);
+                    }
+                }
+                truyenTranhAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -157,13 +165,26 @@ public class HomeFragment extends Fragment {
                 TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
                 if(truyenChu!=null){
                     truyenChuList.add(truyenChu);
+                    if(list.size()<4){
+                        list.add(new Image(truyenChu.getLinkAnh()));
+                        imageAdapter.notifyDataSetChanged();
+                    }
                     truyenChuAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
+                if(truyenChu == null ||truyenChuList == null || truyenChuList.isEmpty()){
+                    return;
+                }
+                for(int i=0 ;i<truyenChuList.size();i++){
+                    if(truyenChu.getId() == truyenChuList.get(i).getId()){
+                        truyenChuList.set(i,truyenChu);
+                    }
+                }
+                truyenChuAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -179,38 +200,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-    }
-    private void getListTruyen() {
-        Call<List<TruyenTranh>> call = APIClient.getInstance().getListTruyenTranh();
-        call.enqueue(new Callback<List<TruyenTranh>>() {
-            @Override
-            public void onResponse(Call<List<TruyenTranh>> call, Response<List<TruyenTranh>> response) {
-                truyenTranhList = response.body();
-                mMainActivity.setList1(truyenTranhList);
-                truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getActivity(), new TruyenTranhAdapter.IClickListener() {
-                    @Override
-                    public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
-                        mMainActivity.goToTruyenTranhFragment(truyenTranh);
-                    }
-                });
-                rvList.setAdapter(truyenTranhAdapter);
-
-
-                for(int i=0;i<4;i++){
-                    list.add(new Image(truyenTranhList.get(i).getLinkAnh()));
-                }
-                imageAdapter = new ImageAdapter(getContext(),list);
-                viewPager.setAdapter(imageAdapter);
-                circleIndicator.setViewPager(viewPager);
-                imageAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
-                autoSlideImage();
-            }
-
-            @Override
-            public void onFailure(Call<List<TruyenTranh>> call, Throwable t) {
-                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -240,9 +229,5 @@ public class HomeFragment extends Fragment {
                 });
             }
         }, 300,3000);
-    }
-    private void getListImage(Image mImage){
-        list.add(mImage);
-        imageAdapter.notifyDataSetChanged();
     }
 }

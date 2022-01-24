@@ -1,7 +1,9 @@
 package com.example.myapplication.Module;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TruyenChu  implements Serializable {
     int id;
@@ -118,5 +120,12 @@ public class TruyenChu  implements Serializable {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("favorite",favorite);
+
+        return result;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.Module.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextView tvMessage;
     List<TruyenTranh> listFavorite;
     List<TruyenTranh> listHistory;
+    List<TruyenChu> listTruyenChuFavorite;
+    List<TruyenChu> listTruyenChuHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         listFavorite = new ArrayList<>();
         listHistory = new ArrayList<>();
+        listTruyenChuFavorite = new ArrayList<>();
+        listTruyenChuHistory = new ArrayList<>();
     }
     private void initListener(){
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                User user = new User(auth.getUid(),strEmail,strPassword,listFavorite,listHistory);
+                                User user = new User(auth.getUid(),strEmail,strPassword,listFavorite,listHistory,listTruyenChuFavorite,listTruyenChuHistory);
                                 addUserToRealtimeDatabase(auth.getUid(),user);
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(SignUpActivity.this,MainActivity.class);

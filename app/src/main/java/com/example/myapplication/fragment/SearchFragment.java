@@ -1,5 +1,7 @@
 package com.example.myapplication.fragment;
 
+import static com.example.myapplication.MainActivity.CHECK;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Adapter.TruyenChuAdapter;
 import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
 
@@ -24,19 +28,12 @@ public class SearchFragment extends Fragment {
     public static final String TAG = SearchFragment.class.getName();
 
     View mView;
-    List<TruyenTranh> list;
+    List<TruyenTranh> truyenTranhList;
+    List<TruyenChu> truyenChuList;
     TruyenTranhAdapter truyenTranhAdapter;
+    TruyenChuAdapter truyenChuAdapter;
     RecyclerView rvList;
     MainActivity mMainActivity;
-
-    public static SearchFragment getInstance(List<TruyenTranh> truyenTranhList){
-        SearchFragment searchFragment = new SearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("list_truyen", (Serializable) truyenTranhList);
-        searchFragment.setArguments(bundle);
-
-        return searchFragment;
-    }
 
     @Nullable
     @Override
@@ -44,21 +41,33 @@ public class SearchFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_search,container,false);
 
         rvList = mView.findViewById(R.id.rvList);
-        list = new ArrayList<>();
-        list = (List<TruyenTranh>) getArguments().get("list_truyen");
         mMainActivity = (MainActivity) getActivity();
-
-        truyenTranhAdapter = new TruyenTranhAdapter(list, getContext(), new TruyenTranhAdapter.IClickListener() {
-            @Override
-            public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
-                mMainActivity.goToTruyenTranhFragment(truyenTranh);
-            }
-        });
-        rvList.setAdapter(truyenTranhAdapter);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),3);
-        rvList.setLayoutManager(layoutManager);
-
+        if(CHECK){
+            truyenTranhList = new ArrayList<>();
+            truyenTranhList = (List<TruyenTranh>) getArguments().get("list_truyen");
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+            rvList.setLayoutManager(layoutManager);
+            truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
+                    mMainActivity.goToTruyenTranhFragment(truyenTranh);
+                }
+            });
+            rvList.setAdapter(truyenTranhAdapter);
+        }
+        else{
+            truyenChuList = new ArrayList<>();
+            truyenChuList = (List<TruyenChu>) getArguments().get("list_truyen_chu");
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+            rvList.setLayoutManager(layoutManager);
+            truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenChu(TruyenChu truyenChu) {
+                    mMainActivity.goToTruyenChuFragment(truyenChu);
+                }
+            });
+            rvList.setAdapter(truyenChuAdapter);
+        }
 
         return mView;
     }

@@ -1,5 +1,7 @@
 package com.example.myapplication.fragment;
 
+import static com.example.myapplication.MainActivity.CHECK;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Adapter.TruyenChuAdapter;
 import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,31 +35,47 @@ import java.util.List;
 public class HistoryFragment extends Fragment {
     public static final String TAG = HistoryFragment.class.getName();
     View mView;
-    TruyenTranh truyenTranh;
     List<TruyenTranh> list;
     RecyclerView rvList;
     TruyenTranhAdapter truyenTranhAdapter;
+    TruyenChuAdapter truyenChuAdapter;
+    List<TruyenChu> truyenChuList;
     MainActivity mMainActivity;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_history,container,false);
 
-
-        list = new ArrayList<>();
         rvList = mView.findViewById(R.id.rvList);
         mMainActivity = (MainActivity) getActivity();
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
-        rvList.setLayoutManager(layoutManager);
-        getListFavoriteFromRealTimeDatabase();
-        truyenTranhAdapter = new TruyenTranhAdapter(list, getContext(), new TruyenTranhAdapter.IClickListener() {
-            @Override
-            public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
-                mMainActivity.goToTruyenTranhFragment(truyenTranh);
-            }
-        });
-        rvList.setAdapter(truyenTranhAdapter);
+        if(CHECK){
+            list = new ArrayList<>();
+            getListFavoriteFromRealTimeDatabase();
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+            rvList.setLayoutManager(layoutManager);
+            truyenTranhAdapter = new TruyenTranhAdapter(list, getContext(), new TruyenTranhAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenTranh(TruyenTranh truyenTranh) {
+                    mMainActivity.goToTruyenTranhFragment(truyenTranh);
+                }
+            });
+            rvList.setAdapter(truyenTranhAdapter);
+        }
+        else{
+            truyenChuList = new ArrayList<>();
+            getListTruyenChu();
+            GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 3);
+            rvList.setLayoutManager(layoutManager1);
+            truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
+                @Override
+                public void onClickItemTruyenChu(TruyenChu truyenChu) {
+                    mMainActivity.goToTruyenChuFragment(truyenChu);
+                }
+            });
+            rvList.setAdapter(truyenChuAdapter);
+        }
+
         return mView;
     }
     private void getListFavoriteFromRealTimeDatabase(){
@@ -78,7 +98,63 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
+                if(truyenTranh == null ||list == null || list.isEmpty()){
+                    return;
+                }
+                for(int i=0 ;i<list.size();i++){
+                    if(truyenTranh.getId() == list.get(i).getId()){
+                        list.set(i,truyenTranh);
+                    }
+                }
+                truyenTranhAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void getListTruyenChu(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            return;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_truyen_chu_history");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
+                if(truyenChu!=null){
+                    truyenChuList.add(truyenChu);
+                    truyenChuAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
+                if(truyenChu == null ||truyenChuList == null || truyenChuList.isEmpty()){
+                    return;
+                }
+                for(int i=0 ;i<truyenChuList.size();i++){
+                    if(truyenChu.getId() == truyenChuList.get(i).getId()){
+                        truyenChuList.set(i,truyenChu);
+                    }
+                }
+                truyenChuAdapter.notifyDataSetChanged();
             }
 
             @Override

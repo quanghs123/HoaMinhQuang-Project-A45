@@ -2,29 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="@color/purple_500"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="bottom">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgAvatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_avatar_default"/>
-    <TextView
-        android:id="@+id/tvName"
+    android:background="@color/purple_500">
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quang Hoa"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"/>
-    <TextView
-        android:id="@+id/tvEmail"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="bottom">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_avatar_default"/>
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quang Hoa"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="quang@gmail.com"
+            android:textSize="14sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="quang@gmail.com"
-        android:textSize="14sp"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/btnChangeTruyenTranh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_change_truyen_tranh"
+            android:layout_marginTop="50dp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/btnChangeTruyenChu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_change_truyen_chu"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
 </LinearLayout>

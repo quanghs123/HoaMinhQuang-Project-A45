@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TruyenTranh implements Serializable {
     @SerializedName("id")
@@ -55,6 +57,7 @@ public class TruyenTranh implements Serializable {
         this.chapTruyen = chapTruyen;
         this.favorite = favorite;
     }
+
 
     public int getId() {
         return id;
@@ -142,5 +145,12 @@ public class TruyenTranh implements Serializable {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+    
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("favorite",favorite);
+
+        return result;
     }
 }

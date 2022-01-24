@@ -31,7 +31,6 @@ import java.util.List;
 
 public class DocTruyenFragment extends Fragment {
     List<AnhTruyen> anhTruyenList;
-    ChapTruyen chapTruyen;
     TruyenTranh truyenTranh;
     AnhTruyenAdapter anhTruyenAdapter;
     RecyclerView rvList;
@@ -119,7 +118,7 @@ public class DocTruyenFragment extends Fragment {
         mMainActivity.goToDocTruyenFragment(truyenTranh,idChap-1);
     }
     private void onClickNextChap(){
-        if(idChap == truyenTranh.getChapTruyen().size()){
+        if(idChap == truyenTranh.getChapTruyen().size()-1){
             Toast.makeText(getActivity(),"This is the last chapter",Toast.LENGTH_SHORT).show();
             return;
         }

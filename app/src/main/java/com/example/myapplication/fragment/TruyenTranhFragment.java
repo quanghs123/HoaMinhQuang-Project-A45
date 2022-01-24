@@ -43,6 +43,7 @@ public class TruyenTranhFragment extends Fragment {
     RecyclerView rvList;
     ChapTruyenAdapter chapTruyenAdapter;
     List<ChapTruyen> chapTruyenList;
+    List<TruyenTranh> tranhList;
     View mView;
     @Nullable
     @Override
@@ -58,7 +59,7 @@ public class TruyenTranhFragment extends Fragment {
         btnDocTruyen = mView.findViewById(R.id.btnDocTruyen);
         btnTheoDoi = mView.findViewById(R.id.btnTheoDoi);
         btnBoTheoDoi = mView.findViewById(R.id.btnBoTheoDoi);
-
+        tranhList = new ArrayList<>();
         chapTruyenList = new ArrayList<>();
 
         rvList = mView.findViewById(R.id.rvList);
@@ -124,24 +125,46 @@ public class TruyenTranhFragment extends Fragment {
             return;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
-        DatabaseReference databaseReference = database.getReference("list_truyen");
-        DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_history");
+
         truyenTranh.setFavorite(true);
         String pathObject = String.valueOf(truyenTranh.getId());
-        databaseReference.child(pathObject).child("favorite").setValue(true, new DatabaseReference.CompletionListener() {
+
+        DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_history");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(tranhList != null){
+                    tranhList.clear();
+                }
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    TruyenTranh truyenTranh1 = dataSnapshot.getValue(TruyenTranh.class);
+                    tranhList.add(truyenTranh1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        reference.child(pathObject).child("favorite").setValue(true);
+        for(int i=0;i<tranhList.size();i++){
+            if(truyenTranh.getId() == tranhList.get(i).getId()){
+                reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
+            }
+        }
+
+
+        DatabaseReference databaseReference = database.getReference("list_truyen");
+        databaseReference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
+
+        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
         myRef.child(pathObject).setValue(truyenTranh, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Toast.makeText(getActivity(),"Add Favorite Success",Toast.LENGTH_SHORT).show();
             }
         });
+
         btnTheoDoi.setVisibility(View.GONE);
         btnBoTheoDoi.setVisibility(View.VISIBLE);
     }
@@ -167,18 +190,40 @@ public class TruyenTranhFragment extends Fragment {
         if(user == null){
             return;
         }
+        truyenTranh.setFavorite(false);
+        String pathObject = String.valueOf(truyenTranh.getId());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
+
         DatabaseReference databaseReference = database.getReference("list_truyen");
+        databaseReference.child(pathObject).updateChildren(truyenTranh.toMap());
+
         DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_history");
-        databaseReference.child(String.valueOf(truyenTranh.getId())).child("favorite").setValue(false, new DatabaseReference.CompletionListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(tranhList != null){
+                    tranhList.clear();
+                }
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    TruyenTranh truyenTranh1 = dataSnapshot.getValue(TruyenTranh.class);
+                    tranhList.add(truyenTranh1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        reference.child(String.valueOf(truyenTranh.getId())).child("favorite").setValue(false);
-        myRef.child(String.valueOf(truyenTranh.getId())).removeValue();
+        for(int i=0;i<tranhList.size();i++){
+            if(truyenTranh.getId() == tranhList.get(i).getId()){
+                reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
+            }
+        }
+
+        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
+        myRef.child(pathObject).removeValue();
+
         btnTheoDoi.setVisibility(View.VISIBLE);
         btnBoTheoDoi.setVisibility(View.GONE);
     }

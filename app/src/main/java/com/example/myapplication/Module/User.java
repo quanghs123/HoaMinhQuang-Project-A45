@@ -8,15 +8,21 @@ public class User {
     String password;
     List<TruyenTranh> listFavorite;
     List<TruyenTranh> listHistory;
+    List<TruyenChu> listTruyenChuFavorite;
+    List<TruyenChu> listTruyenChuHistory;
+
+
     public User(){
     }
 
-    public User(String userId, String email, String password, List<TruyenTranh> listFavorite, List<TruyenTranh> listHistory) {
+    public User(String userId, String email, String password, List<TruyenTranh> listFavorite, List<TruyenTranh> listHistory, List<TruyenChu> listTruyenChuFavorite, List<TruyenChu> listTruyenChuHistory) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.listFavorite = listFavorite;
         this.listHistory = listHistory;
+        this.listTruyenChuFavorite = listTruyenChuFavorite;
+        this.listTruyenChuHistory = listTruyenChuHistory;
     }
 
     public String getUserId() {
@@ -57,5 +63,21 @@ public class User {
 
     public void setListHistory(List<TruyenTranh> listHistory) {
         this.listHistory = listHistory;
+    }
+
+    public List<TruyenChu> getListTruyenChuFavorite() {
+        return listTruyenChuFavorite;
+    }
+
+    public void setListTruyenChuFavorite(List<TruyenChu> listTruyenChuFavorite) {
+        this.listTruyenChuFavorite = listTruyenChuFavorite;
+    }
+
+    public List<TruyenChu> getListTruyenChuHistory() {
+        return listTruyenChuHistory;
+    }
+
+    public void setListTruyenChuHistory(List<TruyenChu> listTruyenChuHistory) {
+        this.listTruyenChuHistory = listTruyenChuHistory;
     }
 }
