@@ -153,7 +153,7 @@ public class TruyenTranhFragment extends Fragment {
                 break;
             }
         }
-        DatabaseReference databaseReference = database.getReference("list_truyen/"+user.getUid()+"/list_truyen_tranh");
+        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_tranh");
         databaseReference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
 
         DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
@@ -193,7 +193,7 @@ public class TruyenTranhFragment extends Fragment {
         String pathObject = String.valueOf(truyenTranh.getId());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = database.getReference("list_truyen/"+user.getUid()+"/list_truyen_tranh");
+        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_tranh");
         databaseReference.child(pathObject).updateChildren(truyenTranh.toMap());
 
         DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_history");
