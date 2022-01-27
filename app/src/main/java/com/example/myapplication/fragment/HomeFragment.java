@@ -22,6 +22,7 @@ import com.example.myapplication.Adapter.ImageAdapter;
 import com.example.myapplication.Adapter.TruyenChuAdapter;
 import com.example.myapplication.Adapter.TruyenTranhAdapter;
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.Module.ChapTruyen;
 import com.example.myapplication.Module.Image;
 import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
@@ -58,25 +59,23 @@ public class HomeFragment extends Fragment {
     TruyenChuAdapter truyenChuAdapter;
     List<TruyenChu> truyenChuList;
     List<TruyenTranh> truyenTranhList;
-    List<TruyenTranh> tranhList;
     View mView;
     MainActivity mMainActivity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_home,container,false);
+        mView = inflater.inflate(R.layout.fragment_home, container, false);
         viewPager = mView.findViewById(R.id.viewPager);
         circleIndicator = mView.findViewById(R.id.circle_indicator);
         rvList = mView.findViewById(R.id.rvList);
         mMainActivity = (MainActivity) getActivity();
         list = new ArrayList<>();
-        if(CHECK){
+        if (CHECK) {
             truyenTranhList = new ArrayList<>();
-            tranhList = new ArrayList<>();
             getListTruyenFromRealTimeDatabase();
-            setFavorite();
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+            getListTruyenTranh();
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(), 3);
             rvList.setLayoutManager(layoutManager);
             truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
                 @Override
@@ -86,11 +85,11 @@ public class HomeFragment extends Fragment {
             });
             rvList.setAdapter(truyenTranhAdapter);
             mMainActivity.setList1(truyenTranhList);
-        }
-        else{
+        } else {
             truyenChuList = new ArrayList<>();
+            getListTruyenChuFromRealTimeDatabase();
             getListTruyenChu();
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(), 3);
             rvList.setLayoutManager(layoutManager);
             truyenChuAdapter = new TruyenChuAdapter(truyenChuList, getContext(), new TruyenChuAdapter.IClickListener() {
                 @Override
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment {
         }
 
 
-        imageAdapter = new ImageAdapter(getActivity(),list);
+        imageAdapter = new ImageAdapter(getActivity(), list);
         viewPager.setAdapter(imageAdapter);
         circleIndicator.setViewPager(viewPager);
         imageAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
@@ -112,7 +111,8 @@ public class HomeFragment extends Fragment {
 
         return mView;
     }
-    private void getListTruyenFromRealTimeDatabase(){
+
+    private void getListTruyenFromRealTimeDatabase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("list_truyen");
 
@@ -120,9 +120,121 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
-                if(truyenTranh!=null){
+                if (truyenTranh != null) {
+                    addListTruyenTranh(truyenTranh);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getListTruyenChuFromRealTimeDatabase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_truyen_chu");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
+                if (truyenChu != null) {
+                    addListTruyenChu(truyenChu);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void autoSlideImage() {
+        if (list == null || list.isEmpty() || viewPager == null) {
+            return;
+        }
+        //Init timer
+        if (mTimer == null) {
+            mTimer = new Timer();
+        }
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPager.getCurrentItem();
+                        int totalItem = list.size() - 1;
+                        if (currentItem < totalItem) {
+                            currentItem++;
+                            viewPager.setCurrentItem(currentItem);
+                        } else {
+                            viewPager.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 300, 3000);
+    }
+
+    private void addListTruyenTranh(TruyenTranh truyenTranh) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_tranh");
+        String pathObject = String.valueOf(truyenTranh.getId());
+        myRef.child(pathObject).setValue(truyenTranh);
+    }
+
+    private void getListTruyenTranh() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_tranh");
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
+                if (truyenTranh != null) {
                     truyenTranhList.add(truyenTranh);
-                    if(list.size()<4){
+                    if (list.size() < 4) {
                         list.add(new Image(truyenTranh.getLinkAnh()));
                         imageAdapter.notifyDataSetChanged();
                     }
@@ -133,12 +245,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 TruyenTranh truyenTranh = snapshot.getValue(TruyenTranh.class);
-                if(truyenTranh == null ||truyenTranhList == null || truyenTranhList.isEmpty()){
+                if (truyenTranh == null || truyenTranhList == null || truyenTranhList.isEmpty()) {
                     return;
                 }
-                for(int i=0 ;i<truyenTranhList.size();i++){
-                    if(truyenTranh.getId() == truyenTranhList.get(i).getId()){
-                        truyenTranhList.set(i,truyenTranh);
+                for (int i = 0; i < truyenTranhList.size(); i++) {
+                    if (truyenTranh.getId() == truyenTranhList.get(i).getId()) {
+                        truyenTranhList.set(i, truyenTranh);
                     }
                 }
                 truyenTranhAdapter.notifyDataSetChanged();
@@ -160,16 +272,32 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    private void getListTruyenChu(){
+
+    private void addListTruyenChu(TruyenChu truyenChu) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_truyen_chu");
+        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_chu");
+        String pathObject = String.valueOf(truyenChu.getId());
+        myRef.child(pathObject).setValue(truyenChu);
+    }
+
+    private void getListTruyenChu() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_chu");
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
-                if(truyenChu!=null){
+                if (truyenChu != null) {
                     truyenChuList.add(truyenChu);
-                    if(list.size()<4){
+                    if (list.size() < 4) {
                         list.add(new Image(truyenChu.getLinkAnh()));
                         imageAdapter.notifyDataSetChanged();
                     }
@@ -180,12 +308,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 TruyenChu truyenChu = snapshot.getValue(TruyenChu.class);
-                if(truyenChu == null ||truyenChuList == null || truyenChuList.isEmpty()){
+                if (truyenChu == null || truyenChuList == null || truyenChuList.isEmpty()) {
                     return;
                 }
-                for(int i=0 ;i<truyenChuList.size();i++){
-                    if(truyenChu.getId() == truyenChuList.get(i).getId()){
-                        truyenChuList.set(i,truyenChu);
+                for (int i = 0; i < truyenChuList.size(); i++) {
+                    if (truyenChu.getId() == truyenChuList.get(i).getId()) {
+                        truyenChuList.set(i, truyenChu);
                     }
                 }
                 truyenChuAdapter.notifyDataSetChanged();
@@ -206,66 +334,5 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
-    private void autoSlideImage(){
-        if(list==null||list.isEmpty()||viewPager==null){
-            return;
-        }
-        //Init timer
-        if(mTimer==null){
-            mTimer = new Timer();
-        }
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentItem = viewPager.getCurrentItem();
-                        int totalItem = list.size()-1;
-                        if(currentItem<totalItem){
-                            currentItem++;
-                            viewPager.setCurrentItem(currentItem);
-                        }else{
-                            viewPager.setCurrentItem(0);
-                        }
-                    }
-                });
-            }
-        }, 300,3000);
-    }
-    private void setFavorite(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null){
-            return;
-        }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
-        DatabaseReference databaseReference = database.getReference("list_truyen");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(tranhList != null){
-                    tranhList.clear();
-                }
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    TruyenTranh truyenTranh = dataSnapshot.getValue(TruyenTranh.class);
-                    tranhList.add(truyenTranh);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        for(int i=0;i<truyenTranhList.size();i++){
-            for (int j=0;j<tranhList.size();j++){
-                if (truyenTranhList.get(i).getId() == tranhList.get(j).getId()){
-                    truyenTranhList.get(i).setFavorite(true);
-                    databaseReference.child(String.valueOf(truyenTranhList.get(i).getId())).updateChildren(truyenTranhList.get(i).toMap());
-                }
-            }
-        }
     }
 }

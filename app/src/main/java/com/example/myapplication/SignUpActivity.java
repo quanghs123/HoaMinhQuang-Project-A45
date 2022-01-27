@@ -33,8 +33,10 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
     ProgressDialog progressDialog;
     TextView tvMessage;
+    List<TruyenTranh> truyenTranhList;
     List<TruyenTranh> listFavorite;
     List<TruyenTranh> listHistory;
+    List<TruyenChu> truyenChuList;
     List<TruyenChu> listTruyenChuFavorite;
     List<TruyenChu> listTruyenChuHistory;
 
@@ -55,8 +57,10 @@ public class SignUpActivity extends AppCompatActivity {
         tvMessage = findViewById(R.id.tvMessage);
         progressDialog = new ProgressDialog(this);
 
+        truyenTranhList = new ArrayList<>();
         listFavorite = new ArrayList<>();
         listHistory = new ArrayList<>();
+        truyenChuList = new ArrayList<>();
         listTruyenChuFavorite = new ArrayList<>();
         listTruyenChuHistory = new ArrayList<>();
     }
@@ -87,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                User user = new User(auth.getUid(),strEmail,strPassword,listFavorite,listHistory,listTruyenChuFavorite,listTruyenChuHistory);
+                                User user = new User(auth.getUid(),strEmail,strPassword,truyenTranhList,listFavorite,listHistory,truyenChuList,listTruyenChuFavorite,listTruyenChuHistory);
                                 addUserToRealtimeDatabase(auth.getUid(),user);
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
@@ -106,11 +110,6 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("list_user");
 
-        myRef.child(strUid).setValue(user, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
-            }
-        });
+        myRef.child(strUid).setValue(user);
     }
 }

@@ -6,8 +6,10 @@ public class User {
     String userId;
     String email;
     String password;
+    List<TruyenTranh> truyenTranhList;
     List<TruyenTranh> listFavorite;
     List<TruyenTranh> listHistory;
+    List<TruyenChu> truyenChuList;
     List<TruyenChu> listTruyenChuFavorite;
     List<TruyenChu> listTruyenChuHistory;
 
@@ -15,12 +17,14 @@ public class User {
     public User(){
     }
 
-    public User(String userId, String email, String password, List<TruyenTranh> listFavorite, List<TruyenTranh> listHistory, List<TruyenChu> listTruyenChuFavorite, List<TruyenChu> listTruyenChuHistory) {
+    public User(String userId, String email, String password, List<TruyenTranh> truyenTranhList, List<TruyenTranh> listFavorite, List<TruyenTranh> listHistory, List<TruyenChu> truyenChuList, List<TruyenChu> listTruyenChuFavorite, List<TruyenChu> listTruyenChuHistory) {
         this.userId = userId;
         this.email = email;
         this.password = password;
+        this.truyenTranhList = truyenTranhList;
         this.listFavorite = listFavorite;
         this.listHistory = listHistory;
+        this.truyenChuList = truyenChuList;
         this.listTruyenChuFavorite = listTruyenChuFavorite;
         this.listTruyenChuHistory = listTruyenChuHistory;
     }
@@ -49,6 +53,14 @@ public class User {
         this.password = password;
     }
 
+    public List<TruyenTranh> getTruyenTranhList() {
+        return truyenTranhList;
+    }
+
+    public void setTruyenTranhList(List<TruyenTranh> truyenTranhList) {
+        this.truyenTranhList = truyenTranhList;
+    }
+
     public List<TruyenTranh> getListFavorite() {
         return listFavorite;
     }
@@ -63,6 +75,14 @@ public class User {
 
     public void setListHistory(List<TruyenTranh> listHistory) {
         this.listHistory = listHistory;
+    }
+
+    public List<TruyenChu> getTruyenChuList() {
+        return truyenChuList;
+    }
+
+    public void setTruyenChuList(List<TruyenChu> truyenChuList) {
+        this.truyenChuList = truyenChuList;
     }
 
     public List<TruyenChu> getListTruyenChuFavorite() {
