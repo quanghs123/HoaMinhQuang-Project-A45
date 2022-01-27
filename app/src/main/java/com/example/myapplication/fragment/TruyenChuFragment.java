@@ -153,6 +153,7 @@ public class TruyenChuFragment extends Fragment {
         for(int i=0;i<truyenChuList.size();i++){
             if(truyenChu.getId() == truyenChuList.get(i).getId()){
                 reference.child(String.valueOf(truyenChu.getId())).updateChildren(truyenChu.toMap());
+                break;
             }
         }
 
@@ -216,6 +217,7 @@ public class TruyenChuFragment extends Fragment {
         for(int i=0;i<truyenChuList.size();i++){
             if(truyenChu.getId() == truyenChuList.get(i).getId()){
                 reference.child(String.valueOf(truyenChu.getId())).updateChildren(truyenChu.toMap());
+                break;
             }
         }
 

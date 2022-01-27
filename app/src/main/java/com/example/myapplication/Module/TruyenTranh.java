@@ -9,35 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 public class TruyenTranh implements Serializable {
-    @SerializedName("id")
-    @Expose
     int id;
-    @SerializedName("tenTruyen")
-    @Expose
     String tenTruyen;
-    @SerializedName("tenChap")
-    @Expose
     String tenChap;
-    @SerializedName("linkAnh")
-    @Expose
     String linkAnh;
-    @SerializedName("capNhat")
-    @Expose
     String capNhat;
-    @SerializedName("theLoai")
-    @Expose
     String theLoai;
-    @SerializedName("noiDung")
-    @Expose
     String noiDung;
-    @SerializedName("tacGia")
-    @Expose
     String tacGia;
-    @SerializedName("tinhTrang")
-    @Expose
     String tinhTrang;
-    @SerializedName("chapTruyen")
-    @Expose
     List<ChapTruyen> chapTruyen;
     boolean favorite;
     public TruyenTranh(){

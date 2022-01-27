@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultCaller;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView imgAvatar;
     TextView tvName,tvEmail;
     final private MyProfileFragment mMyProfileFragment = new MyProfileFragment();
+    Toolbar toolbar;
+    ActionBar actionBar;
 
     NavigationView mNavigationView;
     DrawerLayout mDrawerLayout;
@@ -106,8 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.tootbar);
+        toolbar = findViewById(R.id.tootbar);
         setSupportActionBar(toolbar);
+
+        actionBar = getSupportActionBar();
 
         initUi();
         showUserInformation();
@@ -221,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void replaceFragment(Fragment fragment){
+        actionBar.setTitle(R.string.app_name);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
@@ -241,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list_truyen", (Serializable) timKiem(list1,query));
                     searchFragment.setArguments(bundle);
+                    actionBar.setTitle(R.string.app_name);
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content_frame, searchFragment);
                     fragmentTransaction.addToBackStack(SearchFragment.TAG);
@@ -251,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list_truyen_chu", (Serializable) timKiemTruyenChu(list2,query));
                     searchFragment.setArguments(bundle);
+                    actionBar.setTitle(R.string.app_name);
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content_frame, searchFragment);
                     fragmentTransaction.addToBackStack(SearchFragment.TAG);
@@ -266,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list_truyen", (Serializable) timKiem(list1,newText));
                     searchFragment.setArguments(bundle);
+                    actionBar.setTitle(R.string.app_name);
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content_frame, searchFragment);
                     fragmentTransaction.addToBackStack(SearchFragment.TAG);
@@ -276,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list_truyen_chu", (Serializable) timKiemTruyenChu(list2,newText));
                     searchFragment.setArguments(bundle);
+                    actionBar.setTitle(R.string.app_name);
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content_frame, searchFragment);
                     fragmentTransaction.addToBackStack(SearchFragment.TAG);
@@ -294,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setList2(List<TruyenChu> list2) {
         this.list2 = list2;
     }
+
     private List<TruyenTranh> timKiem(List<TruyenTranh> ls, String strSearch){
         List<TruyenTranh> tranhs = new ArrayList<>();
         for(TruyenTranh truyenTranh : ls){
@@ -313,6 +324,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return truyenChus;
     }
     public void goToTruyenTranhFragment(TruyenTranh truyenTranh){
+
+        actionBar.setTitle(truyenTranh.getTenTruyen());
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         TruyenTranhFragment truyenTranhFragment = new TruyenTranhFragment();
         Bundle bundle = new Bundle();
@@ -373,17 +387,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void goToDocTruyenFragment(TruyenTranh truyenTranh,int i){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        DocTruyenFragment docTruyenFragment = new DocTruyenFragment();
-
-
         fragmentTransaction.replace(R.id.content_frame,DocTruyenFragment.getInstance(truyenTranh,i));
         fragmentTransaction.addToBackStack(TruyenTranhFragment.TAG);
         fragmentTransaction.commit();
     }
     public void goToDocTruyenChuFragment(TruyenChu truyenChu,int i){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-
         fragmentTransaction.replace(R.id.content_frame,DocTruyenChuFragment.getInstance(truyenChu,i));
         fragmentTransaction.addToBackStack(TruyenChuFragment.TAG);
         fragmentTransaction.commit();

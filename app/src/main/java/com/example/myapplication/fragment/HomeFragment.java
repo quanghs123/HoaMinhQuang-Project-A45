@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.myapplication.API.APIClient;
 import com.example.myapplication.Adapter.ImageAdapter;
 import com.example.myapplication.Adapter.TruyenChuAdapter;
 import com.example.myapplication.Adapter.TruyenTranhAdapter;
@@ -27,6 +26,8 @@ import com.example.myapplication.Module.Image;
 import com.example.myapplication.Module.TruyenChu;
 import com.example.myapplication.Module.TruyenTranh;
 import com.example.myapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
     TruyenChuAdapter truyenChuAdapter;
     List<TruyenChu> truyenChuList;
     List<TruyenTranh> truyenTranhList;
+    List<TruyenTranh> tranhList;
     View mView;
     MainActivity mMainActivity;
 
@@ -71,7 +73,9 @@ public class HomeFragment extends Fragment {
         list = new ArrayList<>();
         if(CHECK){
             truyenTranhList = new ArrayList<>();
+            tranhList = new ArrayList<>();
             getListTruyenFromRealTimeDatabase();
+            setFavorite();
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this.getContext(),3);
             rvList.setLayoutManager(layoutManager);
             truyenTranhAdapter = new TruyenTranhAdapter(truyenTranhList, getContext(), new TruyenTranhAdapter.IClickListener() {
@@ -229,5 +233,39 @@ public class HomeFragment extends Fragment {
                 });
             }
         }, 300,3000);
+    }
+    private void setFavorite(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            return;
+        }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
+        DatabaseReference databaseReference = database.getReference("list_truyen");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(tranhList != null){
+                    tranhList.clear();
+                }
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    TruyenTranh truyenTranh = dataSnapshot.getValue(TruyenTranh.class);
+                    tranhList.add(truyenTranh);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        for(int i=0;i<truyenTranhList.size();i++){
+            for (int j=0;j<tranhList.size();j++){
+                if (truyenTranhList.get(i).getId() == tranhList.get(j).getId()){
+                    truyenTranhList.get(i).setFavorite(true);
+                    databaseReference.child(String.valueOf(truyenTranhList.get(i).getId())).updateChildren(truyenTranhList.get(i).toMap());
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.myapplication.Module;
 
-public class AnhTruyen {
+import java.io.Serializable;
+
+public class AnhTruyen implements Serializable {
     int id;
     String linkAnh;
 

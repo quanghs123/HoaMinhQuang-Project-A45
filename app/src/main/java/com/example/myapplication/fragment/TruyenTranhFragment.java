@@ -150,10 +150,9 @@ public class TruyenTranhFragment extends Fragment {
         for(int i=0;i<tranhList.size();i++){
             if(truyenTranh.getId() == tranhList.get(i).getId()){
                 reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
+                break;
             }
         }
-
-
         DatabaseReference databaseReference = database.getReference("list_truyen");
         databaseReference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
 
@@ -218,6 +217,7 @@ public class TruyenTranhFragment extends Fragment {
         for(int i=0;i<tranhList.size();i++){
             if(truyenTranh.getId() == tranhList.get(i).getId()){
                 reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
+                break;
             }
         }
 
