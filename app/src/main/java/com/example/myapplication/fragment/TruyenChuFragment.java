@@ -129,7 +129,7 @@ public class TruyenChuFragment extends Fragment {
         truyenChu.setFavorite(true);
         String pathObject = String.valueOf(truyenChu.getId());
 
-        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_chu");
+        DatabaseReference databaseReference = database.getReference("list_truyen_chu");
         databaseReference.child(String.valueOf(truyenChu.getId())).updateChildren(truyenChu.toMap());
 
         DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_truyen_chu_history");
@@ -153,7 +153,6 @@ public class TruyenChuFragment extends Fragment {
         for(int i=0;i<truyenChuList.size();i++){
             if(truyenChu.getId() == truyenChuList.get(i).getId()){
                 reference.child(String.valueOf(truyenChu.getId())).updateChildren(truyenChu.toMap());
-                break;
             }
         }
 
@@ -193,7 +192,7 @@ public class TruyenChuFragment extends Fragment {
         truyenChu.setFavorite(false);
         String pathObject = String.valueOf(truyenChu.getId());
 
-        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_chu");
+        DatabaseReference databaseReference = database.getReference("list_truyen_chu");
         databaseReference.child(pathObject).updateChildren(truyenChu.toMap());
 
         DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_truyen_chu_history");
@@ -217,7 +216,6 @@ public class TruyenChuFragment extends Fragment {
         for(int i=0;i<truyenChuList.size();i++){
             if(truyenChu.getId() == truyenChuList.get(i).getId()){
                 reference.child(String.valueOf(truyenChu.getId())).updateChildren(truyenChu.toMap());
-                break;
             }
         }
 

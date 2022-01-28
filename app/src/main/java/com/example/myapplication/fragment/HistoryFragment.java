@@ -51,7 +51,7 @@ public class HistoryFragment extends Fragment {
 
         if(CHECK){
             list = new ArrayList<>();
-            getListFavoriteFromRealTimeDatabase();
+            getListTruyenTranhFromRealtimeDatabase();
             GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
             rvList.setLayoutManager(layoutManager);
             truyenTranhAdapter = new TruyenTranhAdapter(list, getContext(), new TruyenTranhAdapter.IClickListener() {
@@ -78,7 +78,7 @@ public class HistoryFragment extends Fragment {
 
         return mView;
     }
-    private void getListFavoriteFromRealTimeDatabase(){
+    private void getListTruyenTranhFromRealtimeDatabase(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
             return;

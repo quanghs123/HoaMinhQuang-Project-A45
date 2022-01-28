@@ -150,10 +150,9 @@ public class TruyenTranhFragment extends Fragment {
         for(int i=0;i<tranhList.size();i++){
             if(truyenTranh.getId() == tranhList.get(i).getId()){
                 reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
-                break;
             }
         }
-        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_tranh");
+        DatabaseReference databaseReference = database.getReference("list_truyen");
         databaseReference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
 
         DatabaseReference myRef = database.getReference("list_user/"+user.getUid()+"/list_favorite");
@@ -193,7 +192,7 @@ public class TruyenTranhFragment extends Fragment {
         String pathObject = String.valueOf(truyenTranh.getId());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = database.getReference("list_user/"+user.getUid()+"/list_truyen_tranh");
+        DatabaseReference databaseReference = database.getReference("list_truyen");
         databaseReference.child(pathObject).updateChildren(truyenTranh.toMap());
 
         DatabaseReference reference = database.getReference("list_user/"+user.getUid()+"/list_history");
@@ -217,7 +216,6 @@ public class TruyenTranhFragment extends Fragment {
         for(int i=0;i<tranhList.size();i++){
             if(truyenTranh.getId() == tranhList.get(i).getId()){
                 reference.child(String.valueOf(truyenTranh.getId())).updateChildren(truyenTranh.toMap());
-                break;
             }
         }
 

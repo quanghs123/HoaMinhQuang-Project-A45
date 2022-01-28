@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
             return;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_tranh");
+        DatabaseReference myRef = database.getReference("list_truyen");
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -193,12 +193,8 @@ public class HomeFragment extends Fragment {
 
 
     private void getListTruyenChu() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            return;
-        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("list_user/" + user.getUid() + "/list_truyen_chu");
+        DatabaseReference myRef = database.getReference("list_truyen_chu");
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
